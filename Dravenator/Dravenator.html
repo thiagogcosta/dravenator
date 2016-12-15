@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dravenator</title>
+
+    <script src="jquery/jquery-1.8.3.min.js"></script>
+
+    <link src="css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css"/>
+
+    <link href=style.css rel=stylesheet />
+    <link href=prologui.css rel=stylesheet />
+    <script src=lib.js></script>
+    <script src=jsprolog.js></script>
+    <script src=prologui.js></script>
+</head>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+
+        var nPergunta = 1;
+        var _verifica;
+
+        var champion = {
+		    'aatrox' : {
+		        'nome'     : 'Aatrox',
+		        'src'  : 'images/champions/aatrox.jpg',
+		        'carac'    : 'A passiva do seu personagem é parecida com o Anjo Guardião?'
+		    },
+		    'ahri' : {
+		        'nome'     : 'Ahri',
+		        'src'  : 'images/champions/ahri.jpg',
+		        'carac'    : 'O seu personagem é uma raposa?'
+		    },
+		    'akali' : {
+		        'nome'     : 'Akali',
+		        'src'  : 'images/champions/akali.jpg',
+		        'carac'    : 'O seu personagem é uma ninja?'
+		    },
+		    'alistar' : {
+		        'nome'     : 'Alistar',
+		        'src'  : 'images/champions/alistar.jpg',
+		        'carac'    : 'O seu personagem é um touro?'
+		    },
+		    'ammumu' : {
+		        'nome'     : 'Amumu',
+		        'src'  : 'images/champions/ammumu.jpg',
+		        'carac'    : 'O seu personagem é uma múmia?'
+		    },
+		    'anivia' : {
+		        'nome'     : 'Anívia',
+		        'src'  : 'images/champions/anivia.jpg',
+		        'carac'    : 'O seu personagem é um pássaro azul?'
+		    },
+		    'annie' : {
+		        'nome'     : 'Annie',
+		        'src'  : 'images/champions/annie.jpg',
+		        'carac'    : 'O seu personagem tem um urso chamado Tibers?'
+		    },
+		    'ashe' : {
+		        'nome'  : 'Ashe',
+		        'src'   : 'images/champions/ashe.jpg',
+		        'carac' : 'A sua personagem é rainha de Freljord?'
+		    },
+		    'aurelionsol' : {
+		        'nome'  : 'Aurelion Sol',
+		        'src'   : 'images/champions/aurelionsol.jpg',
+		        'carac' : 'O seu personagem é um dragao?'
+		    },
+		    'azir' : {
+		        'nome'  : 'Azir',
+		        'src'   : 'images/champions/azir.jpg',
+		        'carac' : 'O seu personagem é imperador de Shurima?'
+		    },
+		    'bardo' : {
+		        'nome'  : 'Bardo',
+		        'src'   : 'images/champions/bardo.jpg',
+		        'carac' : 'O seu personagem utiliza sinos?'
+		    },
+		    'blitzcrank' : {
+		        'nome'  : 'Blitzcrank',
+		        'src'   : 'images/champions/blitzcrank.jpg',
+		        'carac' : 'O seu personagem é um robo?'
+		    },
+		    'brand' : {
+		        'nome'  : 'Brand',
+		        'src'   : 'images/champions/brand.jpg',
+		        'carac' : 'O seu personagem é quente?'
+		    },
+		    'braum' : {
+		        'nome'  : 'Braum',
+		        'src'   : 'images/champions/braum.jpg',
+		        'carac' : 'O seu personagem tem um escudo?'
+		    },
+		    'caitlyn' : {
+		        'nome'  : 'Caitlyn',
+		        'src'   : 'images/champions/caitlyn.jpg',
+		        'carac' : 'O seu personagem usa um rifle?'
+		    },
+		    'cassiopeia' : {
+		        'nome'  : 'Cassiopeia',
+		        'src'   : 'images/champions/cassiopeia.jpg',
+		        'carac' : 'O seu personagem é uma serpente?'
+		    },
+		    'chogath' : {
+		        'nome'  : 'Chogath',
+		        'src'   : 'images/champions/chogath.jpg',
+		        'carac' : 'O seu personagem é uma come os outros?'
+		    },
+		    'corki' : {
+		        'nome'  : 'Corki',
+		        'src'   : 'images/champions/corki.jpg',
+		        'carac' : 'O seu personagem pilota um avião?'
+		    },
+		    'darius' : {
+		        'nome'  : 'Darius',
+		        'src'   : 'images/champions/darius.jpg',
+		        'carac' : 'O seu personagem é meu irmão?'
+		    },
+		    'drmundo' : {
+		        'nome'  : 'Dr.mundo',
+		        'src'   : 'images/champions/drmundo.jpg',
+		        'carac' : 'O seu personagem é usa um cutelo?'
+		    },
+		    'draven' : {
+		        'nome'  : 'Draven',
+		        'src'   : 'images/champions/draven.jpg',
+		        'carac' : 'O seu personagem usa machados, e quanto mais dele melhor?'
+		    },
+		    'ekko' : {
+		        'nome'  : 'Ekko',
+		        'src'   : 'images/champions/ekko.jpg',
+		        'carac' : 'O seu personagem viaja pelo tempo?'
+		    },
+		    'elise' : {
+		        'nome'  : 'Elise',
+		        'src'   : 'images/champions/elise.jpg',
+		        'carac' : 'O seu personagem é uma aranha?'
+		    },
+		    'evelynn' : {
+		        'nome'  : 'Evelynn',
+		        'src'   : 'images/champions/evelynn.jpg',
+		        'carac' : 'O seu personagem tem como passiva a invisibilidade?'
+		    },
+		    'ezreal' : {
+		        'nome'  : 'Ezreal',
+		        'src'   : 'images/champions/ezreal.jpg',
+		        'carac' : 'O seu personagem fala "Seu lugar é no museu"?'
+		    },
+		    'fiddlesticks' : {
+		        'nome'  : 'Fiddlesticks',
+		        'src'   : 'images/champions/fiddlesticks.jpg',
+		        'carac' : 'O seu personagem é um espantalho?'
+		    },
+		    'fiora' : {
+		        'nome'  : 'Fiora',
+		        'src'   : 'images/champions/fiora.jpg',
+		        'carac' : 'O seu personagem tem sotaque francês?'
+		    },
+		    'fizz' : {
+		        'nome'  : 'Fizz',
+		        'src'   : 'images/champions/fizz.jpg',
+		        'carac' : 'O seu personagem é um peixe?'
+		    },
+		    'galio' : {
+		        'nome'  : 'Galio',
+		        'src'   : 'images/champions/galio.jpg',
+		        'carac' : 'O seu personagem é um gárgula?'
+		    },
+		    'gangplank' : {
+		        'nome'  : 'Gangplank',
+		        'src'   : 'images/champions/gangplank.jpg',
+		        'carac' : 'O seu personagem é um pirata?'
+		    },
+		    'garen' : {
+		        'nome'  : 'Garen',
+		        'src'   : 'images/champions/garen.jpg',
+		        'carac' : 'O seu personagem tem bastante recuperação de vida?'
+		    },
+		    'gnar' : {
+		        'nome'  : 'gnar',
+		        'src'   : 'images/champions/gnar.jpg',
+		        'carac' : 'O seu personagem possui duas formas?'
+		    },
+		    'gragas' : {
+		        'nome'  : 'Gragas',
+		        'src'   : 'images/champions/gragas.jpg',
+		        'carac' : 'O seu personagem usa um barril?'
+		    },
+		    'graves' : {
+		        'nome'  : 'Graves',
+		        'src'   : 'images/champions/graves.jpg',
+		        'carac' : 'O seu personagem é inimigo de Twisted Fate?'
+		    },
+		    'hecarim' : {
+		        'nome'  : 'Hecarim',
+		        'src'   : 'images/champions/hecarim.jpg',
+		        'carac' : 'O seu personagem é um centauro?'
+		    },
+		    'heimerdinger' : {
+		        'nome'  : 'Heimerdinger',
+		        'src'   : 'images/champions/heimerdinger.jpg',
+		        'carac' : 'O seu personagem cria armas-de-chão?'
+		    },
+		    'illaoi' : {
+		        'nome'  : 'Illaoi',
+		        'src'   : 'images/champions/illaoi.jpg',
+		        'carac' : 'O seu personagem utiliza tentáculos?'
+		    },
+		    'irelia' : {
+		        'nome'  : 'Irelia',
+		        'src'   : 'images/champions/irelia.jpg',
+		        'carac' : 'O seu personagem já foi nerfado?'
+		    },
+		    'janna' : {
+		        'nome'  : 'Janna',
+		        'src'   : 'images/champions/janna.jpg',
+		        'carac' : 'O seu personagem sabe a previsão do tempo?'
+		    },
+		    'jarvaniv' : {
+		        'nome'  : 'Jarvan IV',
+		        'src'   : 'images/champions/jarvaniv.jpg',
+		        'carac' : 'O seu personagem é rei de Demacia?'
+		    },
+		    'jayce' : {
+		        'nome'  : 'Jayce',
+		        'src'   : 'images/champions/jayce.jpg',
+		        'carac' : 'O seu personagem utiliza um a forma de melee e ranged?'
+		    },
+		    'jax' : {
+		        'nome'  : 'Jax',
+		        'src'   : 'images/champions/jax.jpg',
+		        'carac' : 'O seu personagem utiliza um poste?'
+		    },
+		    'jhin' : {
+		        'nome'  : 'Jhin',
+		        'src'   : 'images/champions/jhin.jpg',
+		        'carac' : 'O seu personagem usa um rifle?'
+		    },
+		    'jinx' : {
+		        'nome'  : 'Jinx',
+		        'src'   : 'images/champions/jinx.jpg',
+		        'carac' : 'O seu personagem tem certificado de doido?'
+		    },
+		    'kalista' : {
+		        'nome'  : 'Kalista',
+		        'src'   : 'images/champions/kalista.jpg',
+		        'carac' : 'O seu personagem é um espectro?'
+		    },
+		    'karma' : {
+		        'nome'  : 'Karma',
+		        'src'   : 'images/champions/karma.jpg',
+		        'carac' : 'O seu personagem utiliza um leque?'
+		    },
+		    'karthus' : {
+		        'nome'  : 'Karthus',
+		        'src'   : 'images/champions/karthus.jpg',
+		        'carac' : 'O seu personagem tem uma ultimate global?'
+		    },
+		    'kassadin' : {
+		        'nome'  : 'Kassadin',
+		        'src'   : 'images/champions/kassadin.jpg',
+		        'carac' : 'O seu personagem teleporta?'
+		    },
+		    'katarina' : {
+		        'nome'  : 'Katarina',
+		        'src'   : 'images/champions/katarina.jpg',
+		        'carac' : 'O seu personagem utiliza adagas?'
+		    },
+		    'kayle' : {
+		        'nome'  : 'Kayle',
+		        'src'   : 'images/champions/kayle.jpg',
+		        'carac' : 'O seu personagem é um anjo?'
+		    },
+		    'kennen' : {
+		        'nome'  : 'Kennen',
+		        'src'   : 'images/champions/kennen.jpg',
+		        'carac' : 'O seu personagem é um ninja do trovão?'
+		    },
+		    'khazix' : {
+		        'nome'  : 'Khazix',
+		        'src'   : 'images/champions/khazix.jpg',
+		        'carac' : 'O seu personagem é uma barata?'
+		    },
+		    'kindred' : {
+		        'nome'  : 'Kindred',
+		        'src'   : 'images/champions/kindred.jpg',
+		        'carac' : 'O seu personagem é a representação da morte?'
+		    },
+		    'kogmaw' : {
+		        'nome'  : 'Kogmaw',
+		        'src'   : 'images/champions/kogmaw.jpg',
+		        'carac' : 'O seu personagem ataca com cuspe?'
+		    },
+		    'leblanc' : {
+		        'nome'  : 'Leblanc',
+		        'src'   : 'images/champions/leblanc.jpg',
+		        'carac' : 'O seu personagem tem uma habilidade de espelho?'
+		    },
+		    'leesin' : {
+		        'nome'  : 'Leesin',
+		        'src'   : 'images/champions/leesin.jpg',
+		        'carac' : 'O seu personagem é cego?'
+		    },
+		    'leona' : {
+		        'nome'  : 'Leona',
+		        'src'   : 'images/champions/leona.jpg',
+		        'carac' : 'O seu personagem utiliza um escudo?'
+		    },
+		    'lissandra' : {
+		        'nome'  : 'Lissandra',
+		        'src'   : 'images/champions/lissandra.jpg',
+		        'carac' : 'O seu personagem é baseado em cristais de gelo'
+		    },
+		    'lucian' : {
+		        'nome'  : 'Lucian',
+		        'src'   : 'images/champions/lucian.jpg',
+		        'carac' : 'O seu personagem usa duas pistolas?'
+		    },
+		    'lulu' : {
+		        'nome'  : 'Lulu',
+		        'src'   : 'images/champions/lulu.jpg',
+		        'carac' : 'O seu personagem tem uma fada que chama Pix?'
+		    },
+		    'lux' : {
+		        'nome'  : 'Lux',
+		        'src'   : 'images/champions/lux.jpg',
+		        'carac' : 'O seu personagem produz um laser em sua ultimate?'
+		    },
+		    'malphite' : {
+		        'nome'  : 'Malphite',
+		        'src'   : 'images/champions/malphite.jpg',
+		        'carac' : 'O seu personagem é uma pedra?'
+		    },
+		    'malzahar' : {
+		        'nome'  : 'Malzahar',
+		        'src'   : 'images/champions/malzahar.jpg',
+		        'carac' : 'O seu personagem invoca voids?'
+		    },
+		    'maokai' : {
+		        'nome'  : 'Maokai',
+		        'src'   : 'images/champions/maokai.jpg',
+		        'carac' : 'O seu personagem é uma árvore?'
+		    },
+		    'masteryi' : {
+		        'nome'  : 'Master Yi',
+		        'src'   : 'images/champions/masteryi.jpg',
+		        'carac' : 'O seu personagem é do estilo wuju?'
+		    },
+		    'missfortune' : {
+		        'nome'  : 'Miss Fortune',
+		        'src'   : 'images/champions/missfortune.jpg',
+		        'carac' : 'O seu personagem é uma pirata?'
+		    },
+		    'mordekaiser' : {
+		        'nome'  : 'Mordekaiser',
+		        'src'   : 'images/champions/mordekaiser.jpg',
+		        'carac' : 'O seu personagem é símbolo do Brasil?'
+		    },
+		    'morgana' : {
+		        'nome'  : 'Morgana',
+		        'src'   : 'images/champions/morgana.jpg',
+		        'carac' : 'O seu personagem é um anjo caído?'
+		    },
+		    'nami' : {
+		        'nome'  : 'Nami',
+		        'src'   : 'images/champions/nami.jpg',
+		        'carac' : 'O seu personagem é uma sereia?'
+		    },
+		    'nasus' : {
+		        'nome'  : 'Nasus',
+		        'src'   : 'images/champions/nasus.jpg',
+		        'carac' : 'O seu personagem é um cachorro?'
+		    },
+		    'nautilus' : {
+		        'nome'  : 'Nautilus',
+		        'src'   : 'images/champions/nautilus.jpg',
+		        'carac' : 'O seu personagem é um mergulhador?'
+		    },
+		    'nidalee' : {
+		        'nome'  : 'Nidalee',
+		        'src'   : 'images/champions/nidalee.jpg',
+		        'carac' : 'O seu personagem se transforma em puma?'
+		    },
+		    'nocturne' : {
+		        'nome'  : 'Nocturne',
+		        'src'   : 'images/champions/nocturne.jpg',
+		        'carac' : 'O seu personagem traz a escuridão?'
+		    },
+		    'nunu' : {
+		        'nome'  : 'Nunu',
+		        'src'   : 'images/champions/nunu.jpg',
+		        'carac' : 'O seu personagem é relacionado a um yeti?'
+		    },
+		    'olaf' : {
+		        'nome'  : 'Olaf',
+		        'src'   : 'images/champions/olaf.jpg',
+		        'carac' : 'O seu personagem é um viking?'
+		    },
+		    'orianna' : {
+		        'nome'  : 'Orianna',
+		        'src'   : 'images/champions/orianna.jpg',
+		        'carac' : 'O seu personagem é um robô?'
+		    },
+		    'pantheon' : {
+		        'nome'  : 'Pantheon',
+		        'src'   : 'images/champions/pantheon.jpg',
+		        'carac' : 'O seu personagem gostaria de ser um padeiro?'
+		    },
+		    'poppy' : {
+		        'nome'  : 'Poppy',
+		        'src'   : 'images/champions/poppy.jpg',
+		        'carac' : 'O seu personagem usa um martelo?'
+		    },
+		    'quinn' : {
+		        'nome'  : 'Quinn',
+		        'src'   : 'images/champions/quinn.jpg',
+		        'carac' : 'O seu personagem tem um passáro chamado Valor?'
+		    },
+		    'rammus' : {
+		        'nome'  : 'Rammus',
+		        'src'   : 'images/champions/rammus.jpg',
+		        'carac' : 'O seu personagem é um tatu?'
+		    },
+		    'reksai' : {
+		        'nome'  : 'Rek Sai',
+		        'src'   : 'images/champions/reksai.jpg',
+		        'carac' : 'O seu personagem se enfia na terra?'
+		    },
+		    'renekton' : {
+		        'nome'  : 'Renekton',
+		        'src'   : 'images/champions/renekton.jpg',
+		        'carac' : 'O seu personagem é um jacaré?'
+		    },
+		    'rengar' : {
+		        'nome'  : 'Rengar',
+		        'src'   : 'images/champions/rengar.jpg',
+		        'carac' : 'O seu personagem é um felino?'
+		    },
+		    'riven' : {
+		        'nome'  : 'Riven',
+		        'src'   : 'images/champions/riven.jpg',
+		        'carac' : 'O seu personagem usa uma espada quebrada?'
+		    },
+		    'rumble' : {
+		        'nome'  : 'Rumble',
+		        'src'   : 'images/champions/rumble.jpg',
+		        'carac' : 'O seu personagem monta em um robô?'
+		    },
+		    'ryze' : {
+		        'nome'  : 'Ryze',
+		        'src'   : 'images/champions/ryze.jpg',
+		        'carac' : 'O seu personagem usa pergaminhos?'
+		    },
+		    'sejuani' : {
+		        'nome'  : 'Sejuani',
+		        'src'   : 'images/champions/sejuani.jpg',
+		        'carac' : 'O seu personagem monta em um javali?'
+		    },
+		    'shaco' : {
+		        'nome'  : 'Shaco',
+		        'src'   : 'images/champions/shaco.jpg',
+		        'carac' : 'O seu personagem é um palhaço?'
+		    },
+		    'shen' : {
+		        'nome'  : 'Shen',
+		        'src'   : 'images/champions/shen.jpg',
+		        'carac' : 'O seu personagem é um ninja tanque?'
+		    },
+		    'shyvanna' : {
+		        'nome'  : 'Shyvanna',
+		        'src'   : 'images/champions/shyvanna.jpg',
+		        'carac' : 'O seu personagem é um dragao?'
+		    },
+		    'singed' : {
+		        'nome'  : 'Singed',
+		        'src'   : 'images/champions/singed.jpg',
+		        'carac' : 'O seu personagem solta veneno?'
+		    },
+		    'sion' : {
+		        'nome'  : 'Sion',
+		        'src'   : 'images/champions/sion.jpg',
+		        'carac' : 'O seu personagem tem uma ultimate de grande locomoção?'
+		    },
+		    'sivir' : {
+		        'nome'  : 'Sivir',
+		        'src'   : 'images/champions/sivir.jpg',
+		        'carac' : 'O seu personagem possui uma banshee como habilidade?'
+		    },
+		    'skarner' : {
+		        'nome'  : 'Skarner',
+		        'src'   : 'images/champions/skarner.jpg',
+		        'carac' : 'O seu personagem é um escorpiao?'
+		    },
+		    'sona' : {
+		        'nome'  : 'Sona',
+		        'src'   : 'images/champions/sona.jpg',
+		        'carac' : 'O seu personagem usa uma harpa?'
+		    },
+		    'soraka' : {
+		        'nome'  : 'Soraka',
+		        'src'   : 'images/champions/soraka.jpg',
+		        'carac' : 'O seu personagem ataca bananas?'
+		    },
+		    'swain' : {
+		        'nome'  : 'Swain',
+		        'src'   : 'images/champions/swain.jpg',
+		        'carac' : 'O seu personagem usa corvos?'
+		    },
+		    'syndra' : {
+		        'nome'  : 'Syndra',
+		        'src'   : 'images/champions/syndra.jpg',
+		        'carac' : 'O seu personagem usa orbs negras?'
+		    },
+		    'tahmkench' : {
+		        'nome'  : 'Tahmkench',
+		        'src'   : 'images/champions/tahmkench.jpg',
+		        'carac' : 'O seu personagem é parecido com um sapo?'
+		    },
+		    'taliyah' : {
+		        'nome'  : 'Taliyah',
+		        'src'   : 'images/champions/taliyah.jpg',
+		        'carac' : 'O seu personagem usa o elemento da natureza terra?'
+		    },
+		    'talon' : {
+		        'nome'  : 'Talon',
+		        'src'   : 'images/champions/talon.jpg',
+		        'carac' : 'O seu personagem utiliza uma lamina na mão?'
+		    },
+		    'taric' : {
+		        'nome'  : 'Taric',
+		        'src'   : 'images/champions/taric.jpg',
+		        'carac' : 'O seu personagem é fabuloso?'
+		    },
+		    'teemo' : {
+		        'nome'  : 'Teemo',
+		        'src'   : 'images/champions/teemo.jpg',
+		        'carac' : 'O seu personagem é odiado pelos jogadores?'
+		    },
+		    'thresh' : {
+		        'nome'  : 'Thresh',
+		        'src'   : 'images/champions/thresh.jpg',
+		        'carac' : 'O seu personagem tem uma lanterna?'
+		    },
+		    'tristana' : {
+		        'nome'  : 'Tristana',
+		        'src'   : 'images/champions/tristana.jpg',
+		        'carac' : 'O seu personagem usa um canhão?'
+		    },
+		    'trundle' : {
+		        'nome'  : 'Trundle',
+		        'src'   : 'images/champions/trundle.jpg',
+		        'carac' : 'O seu personagem é um troll?'
+		    },
+		    'tryndamere' : {
+		        'nome'  : 'Tryndamere',
+		        'src'   : 'images/champions/tryndamere.jpg',
+		        'carac' : 'O seu personagem é rei de Freljord?'
+		    },
+		    'twistedfate' : {
+		        'nome'  : 'Twisted Fate',
+		        'src'   : 'images/champions/twistedfate.jpg',
+		        'carac' : 'O seu personagem usa cartas?'
+		    },
+		    'twitch' : {
+		        'nome'  : 'Twitch',
+		        'src'   : 'images/champions/twitch.jpg',
+		        'carac' : 'O seu personagem é um rato?'
+		    },
+		    'udyr' : {
+		        'nome'  : 'Udyr',
+		        'src'   : 'images/champions/udyr.jpg',
+		        'carac' : 'O seu personagem imita os animais?'
+		    },
+		    'urgot' : {
+		        'nome'  : 'Urgot',
+		        'src'   : 'images/champions/urgot.jpg',
+		        'carac' : 'O seu personagem parece um carangueijo?'
+		    },
+		    'varus' : {
+		        'nome'  : 'Varus',
+		        'src'   : 'images/champions/varus.jpg',
+		        'carac' : 'O seu personagem usa arco e flechas?'
+		    },
+		    'vayne' : {
+		        'nome'  : 'Vayne',
+		        'src'   : 'images/champions/vayne.jpg',
+		        'carac' : 'O seu personagem é uma caçadora noturna?'
+		    },
+		    'veigar' : {
+		        'nome'  : 'Veigar',
+		        'src'   : 'images/champions/veigar.jpg',
+		        'carac' : 'O seu personagem é do mal?'
+		    },
+		    'velkoz' : {
+		        'nome'  : 'Velkoz',
+		        'src'   : 'images/champions/velkoz.jpg',
+		        'carac' : 'O seu personagem possui tentáculos?'
+		    },
+		    'vi' : {
+		        'nome'  : 'Vi',
+		        'src'   : 'images/champions/vi.jpg',
+		        'carac' : 'O seu personagem usa duas luvas de metal?'
+		    },
+		    'viktor' : {
+		        'nome'  : 'Viktor',
+		        'src'   : 'images/champions/viktor.jpg',
+		        'carac' : 'O seu personagem é um cientista?'
+		    },
+		    'vladimir' : {
+		        'nome'  : 'Vladimir',
+		        'src'   : 'images/champions/vladimir.jpg',
+		        'carac' : 'O seu personagem é um vampiro?'
+		    },
+		    'volibear' : {
+		        'nome'  : 'Volibear',
+		        'src'   : 'images/champions/volibear.jpg',
+		        'carac' : 'O seu personagem é um urso?'
+		    },
+		    'warwick' : {
+		        'nome'  : 'Warwick',
+		        'src'   : 'images/champions/warwick.jpg',
+		        'carac' : 'O seu personagem é um lobo?'
+		    },
+		    'wukong' : {
+		        'nome'  : 'Wukong',
+		        'src'   : 'images/champions/wukong.jpg',
+		        'carac' : 'O seu personagem é um macaco?'
+		    },
+		    'xerath' : {
+		        'nome'  : 'Xerath',
+		        'src'   : 'images/champions/xerath.jpg',
+		        'carac' : 'O seu personagem é pura energia?'
+		    },
+		    'xinzhao' : {
+		        'nome'  : 'Xin Zhao',
+		        'src'   : 'images/champions/xinzhao.jpg',
+		        'carac' : 'O seu personagem usa uma lança?'
+		    },
+		    'yasuo' : {
+		        'nome'  : 'Yasuo',
+		        'src'   : 'images/champions/yasuo.jpg',
+		        'carac' : 'O seu personagem parece o fofo(HASAGUI)?'
+		    },
+		    'yorick' : {
+		        'nome'  : 'Yorick',
+		        'src'   : 'images/champions/yorick.jpg',
+		        'carac' : 'O seu personagem é um coveiro?'
+		    },
+		    'zac' : {
+		        'nome'  : 'Zac',
+		        'src'   : 'images/champions/zac.jpg',
+		        'carac' : 'O seu personagem é parecido com uma amoeba?'
+		    },
+		    'zed' : {
+		        'nome'  : 'Zed',
+		        'src'   : 'images/champions/zed.jpg',
+		        'carac' : 'O seu personagem é um ninja das sombras?'
+		    },
+		    'ziggs' : {
+		        'nome'  : 'Ziggs',
+		        'src'   : 'images/champions/ziggs.jpg',
+		        'carac' : 'O seu personagem utiliza bombas?'
+		    },
+		    'zilean' : {
+		        'nome'  : 'Zilean',
+		        'src'   : 'images/champions/zilean.jpg',
+		        'carac' : 'O seu personagem utiliza o tempo?'
+		    },
+		    'zyra' : {
+		        'nome'  : 'Zyra',
+		        'src'   : 'images/champions/zyra.jpg',
+		        'carac' : 'O seu personagem utiliza plantas?'
+		    }
+		}
+
+        var response = {
+            genero : null,
+            funcao : {
+                'funcao'            : null,
+                'funcao-lutador'    : null,
+                'funcao-mago'       : null,
+                'funcao-assassino'   : null,
+                'funcao-suporte'    : null,
+                'funcao-tanque'     : null,
+                'funcao-atirador'   : null,
+            },
+            cabelo : {
+                'cabelo'            : null,
+                'cabelo-amarelo'    : null,
+                'cabelo-vermelho'   : null,
+                'cabelo-preto'      : null,
+                'cabelo-marrom'     : null,
+                'cabelo-bege'       : null,
+                'cabelo-laranja'    : null,
+                'cabelo-azul'       : null,
+                'cabelo-branco'     : null,
+                'cabelo-roxo'       : null,
+                'cabelo-rosa'       : null,
+            },
+            reino : {
+                'reino'             : null,
+                'reino-shurima'     : null,
+                'reino-bilgewater'  : null,
+                'reino-ionia'       : null,
+                'reino-freljord'    : null,
+                'reino-noxus'       : null,
+                'reino-piltover'    : null,
+                'reino-zaun'        : null,
+                'reino-vazio'       : null,
+                'reino-bandlecity'  : null,
+                'reino-demacia'     : null,
+                'reino-ilhasombra'  : null,
+                'reino-mttargon'    : null,
+            },
+            ataque : null,
+            pele : {
+                'pele'          : null,
+                'pele-vermelho' : null,
+                'pele-roxo'     : null,
+                'pele-verde'    : null,
+                'pele-azul'     : null,
+                'pele-amarelo'  : null,
+                'pele-branco'   : null,
+                'pele-marrom'   : null,
+                'pele-preto'    : null,
+            },
+            dano : null,
+            raca : null
+        }
+
+        //SIM
+       $('#reponse1').on('click', (function(){
+            var selector = $('#bulle-outer').find('#bulle-inner.ativo');
+            selector.removeClass('ativo');
+
+            _normalizeResponse(selector, 'sim');
+
+            $(selector).fadeOut({
+                duration: 500,
+                complete: function(){
+
+                    if($(selector).attr('data-type') == 'genero'){
+                        $('#bulle-inner[data-ref="funcao-lutador"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="funcao-lutador"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'funcao'){
+                        $('#bulle-inner[data-ref="cabelo"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="cabelo"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'cabelo' && $(selector).attr('data-ref') == 'cabelo'){
+                        $('#bulle-inner[data-ref="cabelo-amarelo"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="cabelo-amarelo"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-ref').indexOf('cabelo-') > -1){
+                        $('#bulle-inner[data-ref="reino"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="reino"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'reino' && $(selector).attr('data-ref') == 'reino'){
+                        $('#bulle-inner[data-ref="reino-shurima"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="reino-shurima"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-ref').indexOf('reino-') > -1){
+                        $('#bulle-inner[data-ref="ataque"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="ataque"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'ataque'){
+                        $('#bulle-inner[data-ref="pele"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="pele"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'pele' && $(selector).attr('data-ref') == 'pele'){
+                        $('#bulle-inner[data-ref="pele-vermelho"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="pele-vermelho"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-ref').indexOf('pele-') > -1){
+                        $('#bulle-inner[data-ref="dano"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="dano"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'dano'){
+                        var count = 0;
+                        var arr = [];
+
+                        $('#query').val(_verifica);
+                        $('.content2head > button').click();
+
+                        var result = $('#output').val();
+
+                        result = result.replace(/(?:\r\n|\r|\n)/g, ' ').split(' ');
+
+                        for (var i in result) {
+                            if (result[i] == 'I') {
+                            	if($.inArray(result[parseInt(i)+2], arr) == -1){
+                            		arr.push(result[parseInt(i)+2]);
+
+                            		$('<div>').attr({
+	                                    'data-type': "raca",
+	                                    'data-ref': "raca-" + result[parseInt(i) + 2],
+	                                    'id': 'bulle-inner'
+	                                })
+	                                .addClass(count == 0 ? 'ativo' : '')
+	                                .css('display', 'none')
+	                                .text(champion[result[parseInt(i)+2]].carac) //champion[result[parseInt(i)+2]].carac
+	                                .appendTo($('#bulle-outer'));
+
+                                	count++;
+                       		 	}
+                            }
+                        }
+
+                        $('#bulle-outer > #bulle-inner[data-ref^="raca-"]').css('display', 'none');
+
+                        $('#bulle-outer > #bulle-inner[data-ref^="raca-"].ativo').fadeIn({
+                            duration: 500
+                        });
+                    }
+                }
+            });
+        }))
+
+       //NAO
+        $('#reponse2').on('click', (function(){
+            var selector = $('#bulle-outer').find('#bulle-inner.ativo');
+            selector.removeClass('ativo');
+
+            _normalizeResponse(selector, 'nao');
+
+            $(selector).fadeOut({
+                duration: 500,
+                complete: function(){
+                    if($(selector).attr('data-type') == 'cabelo' && $(selector).attr('data-ref') == 'cabelo'){
+                        $('#bulle-inner[data-ref="reino"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="reino"]').addClass('ativo');
+
+                    }else{
+                        if($(selector).attr('data-type') == 'reino' && $(selector).attr('data-ref') == 'reino'){
+                            $('#bulle-inner[data-ref="ataque"]').fadeIn({
+                                duration: 500
+                            });
+                            $('#bulle-inner[data-ref="ataque"]').addClass('ativo');
+
+                        }else{
+                            if($(selector).attr('data-type') == 'pele' && $(selector).attr('data-ref') == 'pele'){
+                                $('#bulle-inner[data-ref="dano"]').fadeIn({
+                                    duration: 500
+                                });
+                                $('#bulle-inner[data-ref="dano"]').addClass('ativo');
+                            }else{
+                                if($(selector).attr('data-type') == 'dano'){
+                                    var count = 0;
+			                        var arr = [];
+
+			                        $('#query').val(_verifica);
+			                        $('.content2head > button').click();
+
+			                        var result = $('#output').val();
+
+			                        result = result.replace(/(?:\r\n|\r|\n)/g, ' ').split(' ');
+
+			                        for (var i in result) {
+			                            if (result[i] == 'I') {
+			                            	if($.inArray(result[parseInt(i)+2], arr) == -1){
+			                            		arr.push(result[parseInt(i)+2]);
+
+			                            		$('<div>').attr({
+				                                    'data-type': "raca",
+				                                    'data-ref': "raca-" + result[parseInt(i) + 2],
+				                                    'id': 'bulle-inner'
+				                                })
+				                                .addClass(count == 0 ? 'ativo' : '')
+				                                .css('display', 'none')
+				                                .text(champion[result[parseInt(i)+2]].carac) //champion[result[parseInt(i)+2]].carac
+				                                .appendTo($('#bulle-outer'));
+
+			                                	count++;
+			                       		 	}
+			                            }
+			                        }
+
+			                        $('#bulle-outer > #bulle-inner[data-ref^="raca-"]').css('display', 'none');
+
+			                        $('#bulle-outer > #bulle-inner[data-ref^="raca-"].ativo').fadeIn({
+			                            duration: 500
+			                        });
+                                }else{
+                                    $(selector).next().fadeIn({
+                                        duration: 500
+                                    });
+                                    $(selector).next().addClass('ativo');
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }));
+
+    //NAO SEI
+    $('#reponse3').on('click', (function(){
+            var selector = $('#bulle-outer').find('#bulle-inner.ativo');
+            selector.removeClass('ativo');
+
+            _normalizeResponse(selector, 'nao sei');
+
+            $(selector).fadeOut({
+                duration: 500,
+                complete: function(){
+                    if($(selector).attr('data-type') == 'genero'){
+                        $('#bulle-inner[data-ref="funcao-lutador"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="funcao-lutador"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'funcao'){
+                        $('#bulle-inner[data-ref="cabelo"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="cabelo"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'cabelo'){
+                        $('#bulle-inner[data-ref="reino"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="reino"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'reino'){
+                        $('#bulle-inner[data-ref="ataque"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="ataque"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'ataque'){
+                        $('#bulle-inner[data-ref="pele"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="pele"]').addClass('ativo');
+                    }
+
+                    if($(selector).attr('data-type') == 'pele'){
+                        $('#bulle-inner[data-ref="dano"]').fadeIn({
+                            duration: 500
+                        });
+                        $('#bulle-inner[data-ref="dano"]').addClass('ativo');
+                    }
+                    if($(selector).attr('data-type') == 'dano') {
+                        var count = 0;
+                        var arr = [];
+
+                        $('#query').val(_verifica);
+                        $('.content2head > button').click();
+
+                        var result = $('#output').val();
+
+                        result = result.replace(/(?:\r\n|\r|\n)/g, ' ').split(' ');
+
+                        for (var i in result) {
+                            if (result[i] == 'I') {
+                            	if($.inArray(result[parseInt(i)+2], arr) == -1){
+                            		arr.push(result[parseInt(i)+2]);
+
+                            		$('<div>').attr({
+	                                    'data-type': "raca",
+	                                    'data-ref': "raca-" + result[parseInt(i) + 2],
+	                                    'id': 'bulle-inner'
+	                                })
+	                                .addClass(count == 0 ? 'ativo' : '')
+	                                .css('display', 'none')
+	                                .text(champion[result[parseInt(i)+2]].carac) //champion[result[parseInt(i)+2]].carac
+	                                .appendTo($('#bulle-outer'));
+
+                                	count++;
+                       		 	}
+                            }
+                        }
+
+                        $('#bulle-outer > #bulle-inner[data-ref^="raca-"]').css('display', 'none');
+
+                        $('#bulle-outer > #bulle-inner[data-ref^="raca-"].ativo').fadeIn({
+                            duration: 500
+                        });
+                    }
+                }
+            });
+        }));
+
+        function _normalizeResponse(sel, val){
+
+            $('#nqp').text(++nPergunta);
+
+            var elemRef  = $(sel).attr('data-ref');
+            var elemType = $(sel).attr('data-type');
+            var aux = false;
+
+            if(val == 'sim'){
+                if(elemType == 'genero'){
+                    response[elemRef] = 'feminino';
+                }
+                if(elemType == 'funcao'){
+                    var typeObj = elemRef.split('-')[1];
+                    response.funcao[elemRef] = typeObj;
+                }
+                if(elemType == 'cabelo' && elemRef.indexOf('cabelo-') > -1){
+                    var typeObj = elemRef.split('-')[1];
+                    response.cabelo[elemRef] = typeObj;
+                }
+                if(elemType == 'reino' && elemRef.indexOf('reino-') > -1){
+                     var typeObj = elemRef.split('-')[1];
+                    response.reino[elemRef] = typeObj;
+                }
+                if(elemType == 'ataque'){
+                    aux = true;
+                    response[elemRef] = 'ranged';
+                }
+                if(elemType == 'pele' && elemRef.indexOf('pele-') > -1){
+                    aux = true;
+                    var typeObj = elemRef.split('-')[1];
+                    response.pele[elemRef] = typeObj;
+                }
+                if(elemType == 'dano'){
+                    aux = true;
+                    response[elemRef] = 'ap';
+                }
+                if(elemType == 'raca'){
+                    aux = true;
+                    var typeObj = elemRef.split('-')[1];
+                    response.raca = typeObj;
+                }
+            }
+
+            if(val == 'nao'){
+                if(elemType == 'genero'){
+                    response[elemRef] = 'masculino';
+                }
+                if(elemType == 'ataque'){
+                    aux = true;
+                    response[elemRef] = 'melee';
+                }
+                if(elemType == 'dano'){
+                    aux = true;
+                    response[elemRef] = 'ad';
+                }
+                if(elemRef == 'cabelo' && elemType == 'cabelo'){
+                    response.cabelo.cabelo = 'nao';
+                }
+                if(elemRef == 'reino' && elemType == 'reino'){
+                    response.reino.reino = 'nao';
+                }
+                if(elemRef == 'pele' && elemType == 'pele'){
+                    response.pele.pele = 'nao';
+                }
+            }
+
+            if(val == 'nao sei'){
+                if(elemType == 'genero'){
+                    response[elemRef] = 'B';
+                }
+                if(elemType == 'ataque'){
+                    aux = true;
+                    response[elemRef] = 'F';
+                }
+                if(elemType == 'dano'){
+                    aux = true;
+                    response[elemRef] = 'H';
+                }
+                if(elemType == 'funcao'){
+                    response.funcao[elemType] = 'C';
+                }
+                if(elemType == 'cabelo' && elemRef.indexOf('cabelo-') > -1){
+                    response.cabelo[elemType] = 'D';
+                }
+                if(elemType == 'reino' && elemRef.indexOf('reino-') > -1){
+                    response.reino[elemType] = 'E';
+                }
+                if(elemType == 'pele' && elemRef.indexOf('pele-') > -1){
+                    aux = true;
+                    response.pele[elemType] = 'G';
+                }
+                if(elemType == 'raca'){
+                    aux = true;
+                    response.raca = 'I';
+                }
+            }
+
+            _attachEvent(aux, elemType);
+        };
+
+        function _attachEvent(aux, type){
+            var generateString;
+
+            var genero = response.genero ? response.genero : 'B';
+            var ataque = response.ataque ? response.ataque : 'F';
+            var dano   = response.dano ? response.dano : 'H';
+            var raca   = response.raca ? response.raca : 'I';
+            var funcao = 'C';
+            var cabelo = 'D';
+            var reino  = 'E';
+            var pele   = 'G';
+
+            if(response.funcao.funcao != '_'){
+                for(var i in response.funcao){
+                    if(response.funcao[i] != null){
+                        funcao = response.funcao[i];
+                        break;
+                    }
+                }
+            }
+
+            if(response.cabelo.cabelo != '_'){
+                for(var i in response.cabelo){
+                    if(response.cabelo[i] != null){
+                        cabelo = response.cabelo[i];
+                        break;
+                    }
+                }
+            }
+
+            if(response.reino.reino != '_'){
+                for(var i in response.reino){
+                    if(response.reino[i] != null){
+                        reino = response.reino[i];
+                        break;
+                    }
+                }
+            }
+
+            if(response.pele.pele != '_'){
+                for(var i in response.pele){
+                    if(response.pele[i] != null){
+                        pele = response.pele[i];
+                        break;
+                    }
+                }
+            }
+
+            _verifica = 'caracteristica(A,'+genero+','+funcao+','+cabelo+','+reino+','+ataque+','+pele+','+dano+','+raca+').';
+
+            console.log(_verifica);
+
+            var objNomes = [];
+
+            if(aux){
+
+                $('#query').val(_verifica);
+                $('.content2head > button').click();
+
+                var result = $('#output').val();
+
+                result = result.replace(/(?:\r\n|\r|\n)/g, ' ').split(' ');
+
+                for(var i in result){
+                    if(result[i] == 'A'){
+                        if($.inArray(result[parseInt(i)+2], objNomes) == -1){
+                            objNomes.push(result[parseInt(i)+2]);
+                        }
+                    }
+                }
+
+                console.log(objNomes);
+
+                if(type == 'dano' && objNomes.length == 0){
+                	$('#reponseQ1, #reponseQ2, #reponseQ3').css('display', 'none');
+                    $('#reponseAgain').css('display', 'block');
+
+                	$('#questionNo, #bulle-outer, #reponses').fadeOut({
+                        duration: 500,
+                        complete: function(){
+                        	$('#bulle-inner[data-ref]').each(function(e){
+                			$(this).css('display', 'none');
+                			})
+                           	$('#bulle-outer, #reponses, #bulle-inner[data-ref="voceerrou"]').fadeIn({
+                        		duration: 500,
+                    		});
+                        }
+                 	});
+                }else{
+                	if(objNomes.length == 1 || type == 'end'){
+
+	                    $('#photo').attr('src', champion[objNomes[0]].src);
+	                    $('#perso').text(champion[objNomes[0]].nome);
+
+	                    $('#questionNo, #bulle-outer, #reponses').fadeOut({
+	                        duration: 500,
+	                        complete: function(){
+	                            $('#zone-actions, #photo-container').fadeIn({
+	                                duration: 500
+	                            });
+	                        }
+	                    });
+
+	                    $('#yesLink').on('click', function(){
+
+	                        var selector  = $('#bulle-outer').find('#bulle-inner.ativo').css('display', 'none');
+	                        $('#reponseQ1, #reponseQ2, #reponseQ3').css('display', 'none');
+	                        $('#reponseAgain').css('display', 'block')
+
+	                        $('#zone-actions, #photo-container').fadeOut({
+	                            duration: 500,
+	                            complete: function(){
+	                                $('#bulle-outer, #reponses, #bulle-inner[data-ref="sucesso"]').fadeIn({
+	                                    duration: 500,
+	                                });
+	                            }
+	                        });
+	                    });
+
+	                     $('#noLink').on('click', function(){
+
+	                     	var verifica = 'caracteristica(A,'+genero+','+funcao+','+cabelo+','+reino+','+ataque+','+pele+','+dano+',I)';
+
+	                     	$('#query').val(verifica);
+			                $('.content2head > button').click();
+
+			                var result = $('#output').val();
+
+			                result = result.replace(/(?:\r\n|\r|\n)/g, ' ').split(' ');
+
+			                for(var i in result){
+			                    if(result[i] == 'A'){
+			                        if($.inArray(result[parseInt(i)+2], objNomes) == -1){
+			                            objNomes.push(result[parseInt(i)+2]);
+			                        }
+			                    }
+			                }
+
+	                        var selector  = $('#bulle-outer').find('#bulle-inner.ativo').css('display', 'none');
+	                        $('#reponseQ1, #reponseQ2, #reponseQ3').css('display', 'none');
+	                        $('#reponseAgain').css('display', 'block')
+	                        var possiveis = 'Possíveis personagens: ';
+
+	                        for(var i in objNomes){
+	                            if(typeof objNomes[i] != 'function'){
+	                                possiveis += champion[objNomes[i]].nome+',';
+	                            }
+	                        }
+
+	                        possiveis = possiveis.slice(0, -1);
+
+	                        if(objNomes.length > 4){
+	                            alert(possiveis);
+	                            possiveis = 'Possíveis personagens: ';
+	                        }
+
+	                        $('#bulle-inner[data-ref="insucesso"]').text(possiveis);
+
+	                        $('#zone-actions, #photo-container').fadeOut({
+	                            duration: 500,
+	                            complete: function(){
+	                                $('#bulle-outer, #reponses, #bulle-inner[data-ref="insucesso"]').fadeIn({
+	                                    duration: 500,
+	                                });
+	                            }
+	                        });
+	                    });
+	                }
+                }
+            }
+        };
+    });
+
+</script>
+
+<body>
+
+<div class=header style="display:none">
+    <h1>Prolog Interpreter in Javascript</h1>
+
+    <div class=toolbar>
+      Layout: 
+      <a id=sidebysidelink href="" onclick="return setSideBySide()">SideBySide</a>
+      <a id=longformlink class=hide href="" onclick="return setLongForm()">LongForm</a>
+      <br/>
+      Font size: 
+      <a id=fontbiglink href="" onclick="return setBigFont()">Big</a>
+      <a id=fontnormallink class=hide href="" onclick="return setNormalFont()">Normal</a><br/>
+    </div>
+</div>
+
+  <div class=content style="display:none">
+    <div class=content1>
+      <div class=content1head>
+        Show rules
+        <label><input id=selectrule1 name=selectrules type=radio checked onchange="selectrulechange()" />User input</label>
+        <label><input id=selectrule2 name=selectrules type=radio onchange="selectrulechange()" />Std rules</label>
+        <label><input id=selectrule3 name=selectrules type=radio onchange="selectrulechange()" />Consult</label>
+        <button onclick="consult(); return false;">Consult</button>
+        <input id=consultfile class=hide type=file onchange="consultchange()" multiple />
+      </div>
+
+      <div class=content1body>      
+        <textarea id=stdrules class=hide>         
+        </textarea>
+
+        <textarea id=consultrules class=hide></textarea>
+        <textarea id=rules>
+caracteristica(aatrox,masculino,lutador,nao,_,meele,vermelho,ad,aatrox).
+caracteristica(aatrox,masculino,lutador,nao,_,meele,preto,ad,aatrox).
+caracteristica(ahri,feminino,mago,preto,ionia,ranged,branco,ap,ahri).
+caracteristica(ahri,feminino,mago,preto,ionia,ranged,vermelho,ap,ahri).
+caracteristica(ahri,feminino,assassino,preto,ionia,ranged,branco,ap,ahri).
+caracteristica(ahri,feminino,assassino,preto,ionia,ranged,vermelho,ap,ahri).
+caracteristica(akali,feminino,assassino,preto,ionia,meele,branco,ap,akali).
+caracteristica(akali,feminino,assassino,preto,ionia,meele,verde,ap,akali).
+caracteristica(alistar,masculino,tanque,nao,_,meele,roxo,ap,alistar).
+caracteristica(ammumu,masculino,tanque,nao,bandlecity,meele,verde,ap,amumu).
+caracteristica(anivia,feminino,mago,nao,freljord,ranged,azul,ap,anivia).
+caracteristica(annie,feminino,mago,vermelho,_,ranged,marrom,ap,annie).
+caracteristica(annie,feminino,suporte,vermelho,_,ranged,branco,ap,annie).
+caracteristica(annie,feminino,mago,vermelho,_,ranged,marrom,ap,annie).
+caracteristica(annie,feminino,suporte,vermelho,_,ranged,branco,ap,annie).
+caracteristica(ashe,feminino,atirador,branco,freljord,ranged,branco,ad,ashe).
+caracteristica(ashe,feminino,atirador,branco,freljord,ranged,azul,ad,ashe).
+caracteristica(aurelionsol,masculino,mago,nao,_,ranged,azul,ap,aurelionsol).
+caracteristica(azir,masculino,mago,amarelo,shurima,ranged,amarelo,ap,azir).
+caracteristica(bardo,masculino,suporte,branco,_,ranged,cinza,ap,bardo).
+caracteristica(bardo,masculino,s uporte,branco,_,ranged,vermelho,ap,bardo).
+caracteristica(blitzcrank,_,suporte,nao,zaun,melee,amarelo,ap,blitzcrank).
+caracteristica(brand,masculino,mago,nao,_,ranged,laranja,ap,brand).
+caracteristica(brand,masculino,mago,laranja,_,ranged,marrom,ap,brand).
+caracteristica(brand,masculino,mago,laranja,_,ranged,laranja,ap,brand).
+caracteristica(braum,masculino,suporte,nao,freljord,melee,branco,ap,braum).
+caracteristica(braum,masculino,suporte,nao,freljord,melee,auzl,ap,braum).
+caracteristica(caitlyn,feminino,atirador,marrom,piltover,ranged,branco,ad,caitlyn).
+caracteristica(caitlyn,feminino,atirador,marrom,piltover,ranged,azul,ad,caitlyn).
+caracteristica(cassiopeia,feminino,mago,_,noxus,ranged,branco,ap,cassiopeia).
+caracteristica(cassiopeia,feminino,mago,_,noxus,ranged,verde,ap,cassiopeia).
+caracteristica(chogath,masculino,tanque,nao,vazio,meele,vermelho,ap,chogath).
+caracteristica(chogath,masculino,tanque,nao,vazio,meele,azul,ap,chogath).
+caracteristica(corki,masculino,atirador,branco,bandlecity,ranged,branco,ad,corki).
+caracteristica(corki,masculino,atirador,branco,bandlecity,ranged,marrom,ad,corki).
+caracteristica(darius,masculino,lutador,preto,noxus,melee,branco,ad,darius).
+caracteristica(darius,masculino,lutador,preto,noxus,melee,cinza,ad,darius).
+caracteristica(darius,masculino,tanque,preto,noxus,melee,branco,ad,darius).
+caracteristica(darius,masculino,tanque,preto,noxus,melee,cinza,ad,darius).
+caracteristica(diana,feminino,mago,branco,mttargon,melee,cinza,ap,diana).
+caracteristica(diana,feminino,mago,branco,mttargon,melee,branco,ap,diana).
+caracteristica(drmundo,masculino,lutador,preto,zaun,melee,roxo,ap,drmundo).
+caracteristica(drmundo,masculino,tanque,preto,zaun,melee,roxo,ap,drmundo).
+caracteristica(draven,masculino,atirador,marrom,noxus,ranged,branco,ad,draven).
+caracteristica(ekko,masculino,assassino,branco,zaun,melee,preto,ap,ekko).
+caracteristica(ekko,masculino,assassino,branco,zaun,melee,verde,ap,ekko).
+caracteristica(elise,feminino,mago,nao,ilhasombra,ranged,branco,ap,elise).
+caracteristica(elise,feminino,mago,nao,ilhasombra,ranged,vermelho,ap,elise).
+caracteristica(evelynn,feminino,assassino,roxo,ilhasombra,melee,azul,ap,evelynn).
+caracteristica(ezreal,masculino,atirador,amarelo,piltover,ranged,branco,ad,ezreal).
+caracteristica(ezreal,masculino,atirador,amarelo,piltover,ranged,amarelo,ad,ezreal).
+caracteristica(fiddlesticks,masculino,mago,nao,_,ranged,verde,ap,fiddlesticks).
+caracteristica(fiddlesticks,masculino,suporte,nao,_,ranged,verde,ap,fiddlesticks).
+caracteristica(fiora,feminino,lutador,preto,demacia,melee,branco,ad,fiora).
+caracteristica(fizz,masculino,assassino,nao,bilgewater,melee,azul,ap,fizz).
+caracteristica(galio,masculino,tanque,nao,demacia,melee,azul,ap,galio).
+caracteristica(galio,masculino,mago,nao,demacia,melee,azul,ap,galio).
+caracteristica(gangplank,masculino,lutador,preto,bilgewater,melee,branco,ad,gangplank).
+caracteristica(garen,masculino,lutador,marrom,demacia,melee,branco,ad,garen).
+caracteristica(garen,masculino,tanque,marrom,demacia,melee,branco,ad,garen).
+caracteristica(gnar,masculino,lutador,laranja,_,ranged,laranja,ad,gnar).
+caracteristica(gnar,masculino,tanque,laranja,_,ranged,laranja,ad,gnar).
+caracteristica(gragas,masculino,lutador,nao,freljord,melee,branco,ap,gragas).
+caracteristica(gragas,masculino,tanque,nao,freljord,melee,branco,ap,gragas).
+caracteristica(graves,masculino,atirador,marrom,bilgewater,ranged,branco,ad,graves).
+caracteristica(graves,masculino,atirador,marrom,bilgewater,ranged,marrom,ad,graves).
+caracteristica(hecarim,masculino,lutador,nao,ilhasombra,melee,azul,ad,hecarim).
+caracteristica(hecarim,masculino,lutador,nao,ilhasombra,melee,cinza,ad,hecarim).
+caracteristica(heimerdinger,masculino,mago,amarelo,bandlecity,melee,branco,ap,heimerdinger).
+caracteristica(illaoi,feminino,lutador,marrom,bilgewater,melee,branco,ad,illaoi).
+caracteristica(illaoi,feminino,lutador,marrom,bilgewater,melee,marrom,ad,illaoi).
+caracteristica(irelia,feminino,lutador,preto,ionia,melee,branco,ad,irelia).
+caracteristica(irelia,feminino,lutador,preto,ionia,melee,vermelho,ad,irelia).
+caracteristica(janna,feminino,suporte,branco,_,ranged,branco,ap,janna).
+caracteristica(jarvaniv,masculino,lutador,preto,demacia,melee,branco,ad,jarvaniv).
+caracteristica(jarvaniv,masculino,tanque,preto,demacia,melee,branco,ad,jarvaniv).
+caracteristica(jax,masculino,lutador,nao,ionia,melee,roxo,ad,jax).
+caracteristica(jayce,masculino,lutador,preto,piltover,ranged,branco,ad,jayce).
+caracteristica(jayce,masculino,lutador,preto,piltover,melee,branco,ad,jayce).
+caracteristica(jhin,masculino,atirador,nao,ionia,ranged,branco,ad,jhin).
+caracteristica(jhin,masculino,atirador,nao,ionia,ranged,cinza,ad,jhin).
+caracteristica(jinx,feminino,atirador,azul,piltover,ranged,branco,ad,jinx).
+caracteristica(kalista,feminino,atirador,preto,ilhasombra,ranged,azul,ad,kalista).
+caracteristica(kalista,feminino,atirador,preto,ilhasombra,ranged,verde,ad,kalista).
+caracteristica(karma,feminino,mago,preto,ionia,ranged,preto,ap,karma).
+caracteristica(karma,feminino,suporte,preto,ionia,ranged,preto,ap,karma).
+caracteristica(karthus,masculino,mago,nao,ilhasombra,ranged,preto,ap,karthus).
+caracteristica(kassadin,masculino,assassino,nao,vazio,melee,_,ap,kassadin).
+caracteristica(katarina,feminino,assassino,vermelho,noxus,melee,branco,ap,katarina).
+caracteristica(katarina,feminino,assassino,vermelho,noxus,melee,preto,ap,katarina).
+caracteristica(kayle,feminino,lutador,amarelo,demacia,_,branco,ap,kayle).
+caracteristica(kayle,feminino,mago,amarelo,demacia,_,branco,ap,kayle).
+caracteristica(kennen,feminino,mago,marrom,ionia,ranged,branco,ap,kennen).
+caracteristica(kennen,feminino,mago,marrom,ionia,ranged,roxo,ap,kennen).
+caracteristica(khazix,masculino,assassino,_,vazio,melee,roxo,ap,khazix).
+caracteristica(kindred,_,atirador,nao,_,ranged,branco,ad,kindred).
+caracteristica(kindred,_,atirador,nao,_,ranged,azul,ad,kindred).
+caracteristica(kindred,_,lutador,nao,_,ranged,azul,ad,kindred).
+caracteristica(kindred,_,lutador,nao,_,ranged,azul,ad,kindred).
+caracteristica(kogmaw,masculino,atirador,_,vazio,ranged,cinza,ad,kogmaw).
+caracteristica(leblanc,feminino,assassino,preto,noxus,ranged,branco,ap,leblanc).
+caracteristica(leblanc,feminino,assassino,preto,noxus,ranged,roxo,ap,leblanc).
+caracteristica(leesin,masculino,lutador,nao,ionia,melee,branco,ad,leesin).
+caracteristica(leona,feminino,tanque,laranja,mttargon,melee,branco,ap,leona).
+caracteristica(leona,feminino,suporte,laranja,mttargon,melee,branco,ap,leona).
+caracteristica(lissandra,feminino,mago,branco,freljord,ranged,azul,ap,lissandra).
+caracteristica(lissandra,feminino,mago,azul,freljord,ranged,azul,ap,lissandra).
+caracteristica(lissandra,feminino,mago,nao,freljord,ranged,azul,ap,lissandra).
+caracteristica(lucian,masculino,atirador,preto,demacia,ranged,preto,ad,lucian).
+caracteristica(lucian,masculino,atirador,preto,demacia,ranged,cinza,ad,lucian).
+caracteristica(lulu,feminino,suporte,roxo,bandlecity,ranged,roxo,ap,lulu).
+caracteristica(lulu,feminino,mago,roxo,bandlecity,ranged,roxo,ap,lulu).
+caracteristica(lux,feminino,mago,amarelo,demacia,ranged,branco,ap,lux).
+caracteristica(lux,feminino,suporte,amarelo,demacia,ranged,branco,ap,lux).
+caracteristica(malphite,masculino,tanque,nao,_,melee,marrom,ap,malphite).
+caracteristica(malphite,masculino,suporte,nao,_,melee,marrom,ap,malphite).
+caracteristica(malzahar,masculino,mago,	preto,vazio,ranged,branco,ap,malzahar).
+caracteristica(malzahar,masculino,mago,preto,vazio,ranged,roxo,ap,malzahar).
+caracteristica(malzahar,masculino,mago,nao,vazio,ranged,branco,ap,malzahar).
+caracteristica(malzahar,masculino,mago,nao,vazio,ranged,roxo,ap,malzahar).
+caracteristica(maokai,masculino,tanque,nao,_,melee,marrom,ap,maokai).
+caracteristica(maokai,masculino,tanque,nao,_,melee,verde,ap,maokai).
+caracteristica(maokai,masculino,suporte,nao,_,melee,marrom,ap,maokai).
+caracteristica(maokai,masculino,suporte,nao,_,melee,verde,ap,maokai).
+caracteristica(masteryi,masculino,assassino,marrom,ionia,melee,branco,ad,masteryi).
+caracteristica(masteryi,masculino,assassino,marrom,ionia,melee,cinza,ad,masteryi).
+caracteristica(missfortune,feminino,atirador,vermelho,bilgewater,ranged,branco,ad,missfortune).
+caracteristica(mordekaiser,masculino,lutador,nao,ilhasombra,melee,cinza,ap,mordekaiser).
+caracteristica(morgana,feminino,mago,preto,noxus,ranged,ap,branco,morgana).
+caracteristica(morgana,feminino,mago,preto,noxus,ranged,roxo,ap,morgana).
+caracteristica(morgana,feminino,suporte,preto,noxus,ranged,branco,ap,morgana).
+caracteristica(morgana,feminino,suporte,preto,noxus,ranged,roxo,ap,morgana).
+caracteristica(nami,feminino,suporte,amarelo,_,ranged,verde,ap,nami).
+caracteristica(nami,feminino,suporte,verde,_,ranged,verde,ap,nami).
+caracteristica(nasus,masculino,lutador,nao,shurima,melee,marrom,ap,nasus).
+caracteristica(nautilus,masculino,tanque,nao,bilgewater,melee,cinza,ap,nautilus).
+caracteristica(nautilus,masculino,lutador,nao,bilgewater,melee,cinza,ap,nautilus).
+caracteristica(nautilus,masculino,suporte,nao,bilgewater,melee,cinza,ap,nautilus).
+caracteristica(nidalee,feminino,assassino,preto,_,_,preto,ap,nidalee).
+caracteristica(nocturne,masculino,assassino,nao,_,melee,preto,ad,nocturne).
+caracteristica(nunu,masculino,suporte,branco,freljord,melee,branco,ap,nunu).
+caracteristica(nunu,masculino,tanque,branco,freljord,melee,branco,ap,nunu).
+caracteristica(olaf,masculino,lutador,amarelo,freljord,melee,branco,ad,olaf).
+caracteristica(orianna,feminino,mago,marrom,piltover,ranged,cinza,ap,orianna).
+caracteristica(orianna,feminino,mago,marrom,piltover,ranged,dourado,ap,orianna).
+caracteristica(orianna,feminino,mago,marrom,piltover,ranged,amarelo,ap,orianna).
+caracteristica(pantheon,masculino,lutador,nao,mttargon,melee,branco,ad,pantheon).
+caracteristica(pantheon,masculino,lutador,_,mttargon,melee,branco,ad,pantheon).
+caracteristica(poppy,feminino,tanque,branco,demacia,melee,azul,ad,poppy).
+caracteristica(poppy,feminino,lutador,branco,demacia,melee,azul,ad,poppy).
+caracteristica(poppy,feminino,tanque,branco,demacia,melee,dourado,ad,poppy).
+caracteristica(poppy,feminino,lutador,branco,demacia,melee,dourado,ad,poppy).
+caracteristica(poppy,feminino,tanque,branco,demacia,melee,amarelo,ad,poppy).
+caracteristica(poppy,feminino,lutador,branco,demacia,melee,amarelo,ad,poppy).
+caracteristica(quinn,feminino,atirador,nao,demacia,ranged,branco,ad,quinn).
+caracteristica(quinn,feminino,atirador,azul,demacia,ranged,branco,ad,quinn).
+caracteristica(quinn,feminino,atirador,_,demacia,ranged,branco,ad,quinn).
+caracteristica(rammus,masculino,tanque,nao,shurima,melee,marrom,ap,rammus).
+caracteristica(rammus,masculino,tanque,nao,shurima,melee,verde,ap,rammus).
+caracteristica(reksai,feminino,lutador,_,vazio,melee,roxo,ad,reksai).
+caracteristica(reksai,feminino,lutador,_,vazio,melee,azul,ad,reksai).
+caracteristica(renekton,masculino,lutador,_,shurima,melee,verde,ad,renekton).
+caracteristica(renekton,masculino,lutador,_,shurima,melee,marrom,ad,renekton).
+caracteristica(renekton,masculino,tanque,_,shurima,melee,verde,ad,renekton).
+caracteristica(renekton,masculino,tanque,_,shurima,melee,marrom,ad,renekton).
+caracteristica(rengar,masculino,assassino,branco,_,melee,cinza,ad,rengar).
+caracteristica(rengar,masculino,assassino,branco,_,melee,marrom,ad,rengar).
+caracteristica(rengar,masculino,assassino,branco,_,melee,_,ad,rengar).
+caracteristica(riven,feminino,lutador,branco,noxus,melee,branco,ad,riven).
+caracteristica(rumble,masculino,lutador,azul,bandlecity,melee,cinza,ap,rumble).
+caracteristica(rumble,masculino,lutador,azul,bandlecity,melee,marrom,ap,rumble).
+caracteristica(ryze,masculino,mago,nao,_,ranged,azul,ap,ryze).
+caracteristica(sejuani,feminino,tanque,nao,freljord,melee,branco,ap,sejuani).
+caracteristica(sejuani,feminino,tanque,amarelo,freljord,melee,branco,ap,sejuani).
+caracteristica(shaco,masculino,assassino,nao,_,melee,_,branco,shaco).
+caracteristica(shaco,masculino,assassino,nao,_,melee,_,laranja,shaco).
+caracteristica(shen,masculino,lutador,nao,ionia,melee,branco,ap,shen).
+caracteristica(shen,masculino,tanque,nao,ionia,melee,azul,ap,shen).
+caracteristica(shen,masculino,lutador,nao,ionia,melee,branco,ap,shen).
+caracteristica(shen,masculino,tanque,nao,ionia,melee,azul,ap,shen).
+caracteristica(shyvanna,feminino,lutador,nao,demacia,melee,roxo,ad,shyvanna).
+caracteristica(shyvanna,feminino,tanque,nao,demacia,melee,roxo,ad,shyvanna).
+caracteristica(shyvanna,feminino,lutador,nao,demacia,melee,laranja,ad,shyvanna).
+caracteristica(shyvanna,feminino,tanque,nao,demacia,melee,laranja,ad,shyvanna).
+caracteristica(singed,masculino,tanque,nao,zaun,melee,branco,ap,singed).
+caracteristica(singed,masculino,mago,nao,zaun,melee,branco,ap,singed).
+caracteristica(sion,masculino,tanque,nao,noxus,melee,branco,ad,sion).
+caracteristica(sion,masculino,tanque,nao,noxus,melee,cinza,ad,sion).
+caracteristica(sion,masculino,tanque,nao,noxus,melee,roxo,ad,sion).
+caracteristica(sivir,feminino,atirador,marrom,shurima,ranged,branco,ad,sivir).
+caracteristica(skarner,masculino,lutador,nao,_,melee,roxo,ap,skarner).
+caracteristica(skarner,masculino,tanque,nao,_,melee,roxo,ap,skarner).
+caracteristica(sona,feminino,suporte,azul,demacia,ranged,branco,ap,sona).
+caracteristica(soraka,feminino,suporte,branco,ionia,ranged,roxo,ap,soraka).
+caracteristica(swain,masculino,mago,preto,noxus,ranged,branco,ap,swain).
+caracteristica(swain,masculino,mago,preto,noxus,ranged,verde,ap,swain).
+caracteristica(syndra,feminino,mago,branco,ionia,ranged,branco,ap,syndra).
+caracteristica(syndra,feminino,mago,branco,ionia,ranged,roxo,ap,syndra).
+caracteristica(tahmkench,masculino,suporte,nao,_,melee,verde,ap,tahmkench).
+caracteristica(tahmkench,masculino,tanque,nao,_,melee,_,ap,tahmkench).
+caracteristica(tahmkench,masculino,suporte,nao,_,melee,marrom,ap,tahmkench).
+caracteristica(tahmkench,masculino,tanque,nao,_,melee,_,ap,tahmkench).
+caracteristica(taliyah,feminino,mago,marrom,shurima,ranged,branco,ap,taliyah).
+caracteristica(taliyah,feminino,mago,marrom,shurima,ranged,laranja,ap,taliyah).
+caracteristica(talon,masculino,assassino,preto,noxus,melee,branco,ad,talon).
+caracteristica(talon,masculino,assassino,preto,noxus,melee,cinza,ad,talon).
+caracteristica(talon,masculino,assassino,preto,noxus,melee,azul,ad,talon).
+caracteristica(taric,masculino,suporte,marrom,_,melee,branco,ap,taric).
+caracteristica(taric,masculino,suporte,marrom,_,melee,azul,ap,taric).
+caracteristica(teemo,masculino,atirador,laranja,bandlecity,ranged,branco,ap,teemo).
+caracteristica(teemo,masculino,mago,laranja,bandlecity,ranged,marrom,ad,teemo).
+caracteristica(teemo,masculino,atirador,laranja,bandlecity,ranged,branco,ap,teemo).
+caracteristica(teemo,masculino,mago,laranja,bandlecity,ranged,marrom,ad,teemo).
+caracteristica(thresh,masculino,suporte,nao,ilhasombra,melee,verde,ad,thresh).
+caracteristica(thresh,masculino,suporte,nao,ilhasombra,melee,verde,ap,thresh).
+caracteristica(tristana,feminino,atirador,branco,bandlecity,ranged,roxo,ad,tristana).
+caracteristica(trundle,masculino,lutador,roxo,freljord,melee,azul,ad,trundle).
+caracteristica(trundle,masculino,tanque,roxo,freljord,melee,azul,ad,trundle).
+caracteristica(tryndamre,masculino,lutador,preto,freljord,melee,branco,ad,tryndamre).
+caracteristica(twistedfate,masculino,mago,preto,bilgewater,ranged,branco,ap,twistedfate).
+caracteristica(twitch,masculino,atirador,_,zaun,ranged,verde,ad,twitch).
+caracteristica(twitch,masculino,atirador,_,zaun,ranged,marrom,ad,twitch).
+caracteristica(udyr,masculino,lutador,preto,freljord,melee,branco,ad,udyr).
+caracteristica(udyr,masculino,lutador,preto,freljord,melee,branco,ap,udyr).
+caracteristica(urgot,masculino,atirador,_,noxus,ranged,verde,ad,urgot).
+caracteristica(urgot,masculino,atirador,_,noxus,ranged,marrom,ad,urgot).
+caracteristica(varus,masculino,atirador,branco,ionia,ranged,roxo,ad,varus).
+caracteristica(vayne,feminino,atirador,preto,demacia,ranged,branco,ad,vayne).
+caracteristica(veigar,masculino,mago,nao,bandlecity,ranged,roxo,ap,veigar).
+caracteristica(veigar,masculino,mago,nao,bandlecity,ranged,preto,ap,veigar).
+caracteristica(velkoz,masculino,mago,nao,vazio,ranged,roxo,ap,velkoz).
+caracteristica(vi,feminino,lutador,rosa,piltover,melee,branco,ad,vi).
+caracteristica(vi,feminino,tanque,rosa,piltover,melee,branco,ad,vi).
+caracteristica(viktor,masculino,mago,nao,zaun,ranged,cinza,ap,viktor).
+caracteristica(viktor,masculino,mago,nao,zaun,ranged,dourado,ap,viktor).
+caracteristica(viktor,masculino,mago,nao,zaun,ranged,amarelo,ap,viktor).
+caracteristica(vladimir,masculino,mago,vermelho,noxus,ranged,branco,ap,vladimir).
+caracteristica(vladimir,masculino,mago,vermelho,noxus,ranged,vermelho,ap,vladimir).
+caracteristica(volibear,masculino,lutador,branco,freljord,melee,branco,ad,volibear).
+caracteristica(volibear,masculino,tanque,branco,freljord,melee,branco,ad,volibear).
+caracteristica(warwick,masculino,lutador,azul,zaun,melee,azul,ad,warwick).
+caracteristica(wukong,masculino,lutador,marrom,ionia,melee,marrom,ad,wukong).
+caracteristica(wukong,masculino,lutador,marrom,ionia,melee,vermelho,ad,wukong).
+caracteristica(xerath,masculino,mago,nao,shurima,ranged,azul,ap,xerath).
+caracteristica(xinzhao,masculino,lutador,marrom,demacia,melee,branco,ad,xinzhao).
+caracteristica(xinzhao,masculino,lutador,marrom,demacia,melee,laranja,ad,xinzhao).
+caracteristica(yasuo,masculino,assassino,marrom,ionia,melee,branco,ad,yasuo).
+caracteristica(yasuo,masculino,assassino,marrom,ionia,melee,azul,ad,yasuo).
+caracteristica(yasuo,masculino,assassino,preto,ionia,melee,branco,ad,yasuo).
+caracteristica(yasuo,masculino,assassino,preto,ionia,melee,azul,ad,yasuo).
+caracteristica(yorick,masculino,lutador,nao,ilhasombra,melee,marrom,ad,yorick).
+caracteristica(yorick,masculino,lutador,nao,ilhasombra,melee,verde,ad,yorick).
+caracteristica(zac,masculino,tanque,nao,zaun,melee,verde,ap,zac).
+caracteristica(zac,masculino,mago,nao,zaun,melee,verde,ap,zac).
+caracteristica(zed,masculino,assassino,_,ionia,melee,vermelho,ad,zed).
+caracteristica(zed,masculino,assassino,_,ionia,melee,branco,ad,zed).
+caracteristica(ziggs,masculino,mago,nao,bandlecity,ranged,marrom,ap,ziggs).
+caracteristica(ziggs,masculino,mago,nao,bandlecity,ranged,vermelho,ap,ziggs).
+caracteristica(zilean,masculino,mago,branco,piltover,ranged,branco,ap,zilean).
+caracteristica(zilean,masculino,suporte,branco,piltover,ranged,branco,ap,zilean).
+caracteristica(zyra,feminino,mago,vermelho,_,ranged,branco,ap,zyra).
+caracteristica(zyra,feminino,mago,vermelho,_,ranged,verde,ap,zyra).
+caracteristica(zyra,feminino,suporte,vermelho,_,ranged,branco,ap,zyra).
+caracteristica(zyra,feminino,suporte,vermelho,_,ranged,verde,ap,zyra).
+        </textarea>
+      </div>    
+    </div>
+
+    <div class=content2>
+      <div class=content2head>
+        <label>Enter your query:<br/>
+        <textarea id=query></textarea></label>
+        <br/><button onclick="runprolog(); return true;">Run query</button> [Ctrl + Enter]
+        <label><input id=showparse type=checkbox /> Show parse results</label>
+      </div>
+
+      <div class=content2body>
+        <textarea id=output></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class=footer style="display:none">
+    Original Author 
+    <a href=http://ioctl.org/logic/prolog-latest>Jan</a> |
+    <a href=http://bijugc.github.io/jsprolog/>Forked</a>
+    by Biju GC | 
+    Licensed under a two-clause (non-advertising) BSD-style license.
+  </div>
+
+<div id="container">
+    <div id="main" role="main" style="top: 146px;position: absolute;">
+        <aside id="left">
+            <div class="reponse" id="cancelbtn" style="display: none;"><a href="javascript:void(0);" id="cancelanswer">Corrigir</a>
+            </div>
+
+            <div id="colonne"><img src="images/colonne.png"></div>
+
+        </aside>
+
+        <div id="content">
+
+            <div id="photo-container" style="display:none;">
+                <img src="http://api-pt3.akinator.com/photo0/246x294/partenaire/q/1830718925__2010967659.jpeg" id="photo"><div id="submittedBy" style="display: none;">Enviado por <span id="pseudo_emetteur">none</span></div>    
+            </div>
+
+            <section id="zone-actions" style="display: none;">
+                <section id="infos-perso">
+                    <div id="infos-perso-title">    
+                        <p>O seu personagem é...</p>
+                        <h2 id="perso" style="font-size: 20px;"></h2>
+                    </div>
+                    <div id="infos-perso-content">    
+                        <p id="description">Estou Certo?</p>
+                    </div>
+                    <div id="infos-perso-footer"></div>
+                </section>
+                <section id="validation-propose">
+                    <div class="reponse"><a style='cursor: pointer' id="yesLink">Sim</a></div>
+                    <div class="reponse"><a style='cursor: pointer' id="noLink">Não</a></div>
+                </section>
+            </section>
+
+            <div id="questionNo">Pergunta N°<span id="nqp">1</span></div>
+
+            <div id="bulle-outer">
+                <div id="bulle-inner" style="display:inline-block;" data-type="genero" data-ref="genero" class="ativo">O seu personagem é do genero feminino?</div>
+
+                <div id="bulle-inner" style="display:none;" data-type="funcao" data-ref="funcao-lutador">O seu personagem é lutador?</div>
+                <div id="bulle-inner" style="display:none;" data-type="funcao" data-ref="funcao-mago">O seu personagem é mago?</div>
+                <div id="bulle-inner" style="display:none;" data-type="funcao" data-ref="funcao-assassino">O seu personagem é assassino?</div>
+                <div id="bulle-inner" style="display:none;" data-type="funcao" data-ref="funcao-suporte">O seu personagem é suporte?</div>
+                <div id="bulle-inner" style="display:none;" data-type="funcao" data-ref="funcao-tanque">O seu personagem é tanque?</div>
+                <div id="bulle-inner" style="display:none;" data-type="funcao" data-ref="funcao-atirador">O seu personagem é atirador?</div>
+
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo">O seu personagem possui cabelo/pelo?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-amarelo">O seu personagem possui cabelo/pelo amarelo?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-branco">O seu personagem possui cabelo/pelo branco?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-preto">O seu personagem possui cabelo/pelo preto?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-marrom">O seu personagem possui cabelo/pelo marrom?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-bege">O seu personagem possui cabelo/pelo bege?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-laranja">O seu personagem possui cabelo/pelo laranja?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-azul">O seu personagem possui cabelo/pelo azul?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-vermelho">O seu personagem possui cabelo/pelo vermelho?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-roxo">O seu personagem possui cabelo/pelo roxo?</div>
+                <div id="bulle-inner" style="display:none;" data-type="cabelo" data-ref="cabelo-rosa">O seu personagem possui cabelo/pelo rosa?</div>
+
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino">O seu personagem possui um reino?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-shurima">O seu personagem pertence ao reino de Shurima?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-bilgewater"> O seu personagem pertence ao reino de Bilgewater(Águas de Sentina)?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-ionia"> seu personagem pertence ao reino de Ionia?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-freljord"> seu personagem pertence ao reino de Freljord?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-demacia"> seu personagem pertence ao reino de Demacia?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-piltover"> seu personagem pertence ao reino de Piltover?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-zaun">O seu personagem possui um reino de Zaun?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-vazio"> seu personagem pertence ao reino de Vazio?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-bandlecity"> seu personagem pertence ao reino de Bandle City?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-noxus"> seu personagem pertence ao reino de Noxus?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-ilhasombra"> seu personagem pertence ao reino da Ilha das Sombras?</div>
+                <div id="bulle-inner" style="display:none;" data-type="reino" data-ref="reino-mttargon"> seu personagem pertence ao reino de Mount Targon?</div>
+
+                <div id="bulle-inner" style="display:none;" data-type="ataque" data-ref="ataque">O seu personagem possui o ataque básico a distância?</div>
+
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele">O seu personagem possui a cor de pele/roupa?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-vermelho">O seu personagem possui a cor(pele/roupa) vermelho?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-roxo">O seu personagem possui a cor(pele/roupa) roxo?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-verde">O seu personagem possui a cor(pele/roupa) verde?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-azul">O seu personagem possui a cor(pele/roupa) azul?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-amarelo">O seu personagem possui a cor(pele/roupa) amarelo?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-branco">O seu personagem possui a cor(pele/roupa) branco?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-marrom">O seu personagem possui a cor(pele/roupa) marrom?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-preto">O seu personagem possui a cor(pele/roupa) preto?</div>
+                <div id="bulle-inner" style="display:none;" data-type="pele" data-ref="pele-preto">O seu personagem possui a cor(pele/roupa) dourado?</div>
+
+                <div id="bulle-inner" style="display:none;" data-type="dano" data-ref="dano">O seu personagem possui dano baseado em poder de habilidade?</div>
+
+                <div id="bulle-inner" style="display:none;" data-ref="sucesso">DRAAAAAVEN nunca erra!!!</div>
+                <div id="bulle-inner" style="display:none;" data-ref="insucesso"></div>
+                <div id="bulle-inner" style="display:none;" data-ref="voceerrou">Não é possível, DRAAAVEN nunca erra. Você que errou!!! Tente de novo.</div>
+            </div>
+
+
+            <section id="reponses">
+                <div class="reponse" id="reponseQ1"><a href="javascript:void(0);" id="reponse1">Sim</a></div>
+                <div class="reponse" id="reponseQ2"><a href="javascript:void(0);" id="reponse2">Não</a></div>
+                <div class="reponse" id="reponseQ3"><a href="javascript:void(0);" id="reponse3">Não sei</a></div>
+                <div class="reponse" id="reponseAgain" style="display: none;"><a href="" id="reponse4">Jogar Novamente</a></div>
+            </section>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            <section id="akinator">
+                <img src="images/dravenator.png" id="akitude"></section>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+
+    <div id="fenetre"></div>
+    <div id="tapis"></div>
+    <div id="light-gauche"></div>
+    <div id="light-droite"></div>
+</div>
+
+
+<div id="colorbox" class="" style="display: none; padding-bottom: 42px; padding-right: 42px;">
+    <div id="cboxWrapper">
+        <div>
+            <div id="cboxTopLeft" style="float: left;"></div>
+            <div id="cboxTopCenter" style="float: left;"></div>
+            <div id="cboxTopRight" style="float: left;"></div>
+        </div>
+        <div style="clear: left;">
+            <div id="cboxMiddleLeft" style="float: left;"></div>
+            <div id="cboxContent" style="float: left;">
+                <div id="cboxLoadedContent" style="width: 0px; height: 0px; overflow: hidden; float: left;"></div>
+                <div id="cboxLoadingOverlay" style="float: left;"></div>
+                <div id="cboxLoadingGraphic" style="float: left;"></div>
+                <div id="cboxTitle" style="float: left;"></div>
+                <div id="cboxCurrent" style="float: left;"></div>
+                <div id="cboxNext" style="float: left;"></div>
+                <div id="cboxPrevious" style="float: left;"></div>
+                <div id="cboxSlideshow" style="float: left;"></div>
+                <div id="cboxClose" style="float: left;"></div>
+            </div>
+            <div id="cboxMiddleRight" style="float: left;"></div>
+        </div>
+        <div style="clear: left;">
+            <div id="cboxBottomLeft" style="float: left;"></div>
+            <div id="cboxBottomCenter" style="float: left;"></div>
+            <div id="cboxBottomRight" style="float: left;"></div>
+        </div>
+    </div>
+    <div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div>
+</div>
+</body>
+</html>
